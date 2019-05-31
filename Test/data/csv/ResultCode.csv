@@ -1,0 +1,7 @@
+#编号,#备注,#英文代号,#显示于前端的信息
+Id:int,Remark:string,Code:string,Description:string
+1.0,,OK
+2.0,,LOGIN_FALI_OPENID_ERROR,账号错误
+3.0,,LOGIN_FALI_PASSWORD_ERROR,密码错误
+4.0,,PVE_GAME_FAIL_HERO_ERROR,副本战斗请求出战英雄非法
+
