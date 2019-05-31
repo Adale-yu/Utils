@@ -1,0 +1,11 @@
+# Game Server Configure File
+# Version 1.0.0
+# Authoer Yaowei Wang
+
+# 服务器监听端口号
+port = 30003
+mport = 30004
+# 区服ID  开区的时候需要注意此ID需要与数据库对应
+zoneid = 1
+# 开区时间
+openservertime=2017-10-16 05:00:00
