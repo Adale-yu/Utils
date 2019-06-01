@@ -3,6 +3,7 @@ package test.file;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +44,58 @@ public class FileUtil {
 		}
 		
 		return list;
+	}
+	
+	/**
+	 * 使用FileInputStream读取文件
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFromFileUsingInputStream(File file) throws IOException {
+		if(!file.exists() || file.isDirectory()) {
+			throw new FileNotFoundException();
+		}
+		StringBuffer sb = new StringBuffer();
+		FileInputStream fis = new FileInputStream(file);
+		//解决结尾空字符
+		//1.获取文件的大小
+		/*byte[] buff = new byte[(int) file.length()];
+		fis.read(buff);
+		sb.append(new String(buff, "GBK"));*/
+		
+		//2.fis.read(byte[])方法返回读取的字符数组长度
+		byte[] buff2 = new byte[1024];
+		int temp = 0;
+		while((temp=fis.read(buff2)) != -1) {
+			sb.append(new String(buff2, 0 ,temp, "GBK"));
+			buff2 = new byte[1024];
+		}
+		
+		fis.close();
+		return sb.toString();
+	}
+	
+	/**
+	 * 用BufferedReader读取文件
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFromFileUsingBufferedReader(File file) throws IOException {
+		if(!file.exists() || file.isDirectory()) {
+			throw new FileNotFoundException();
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
+		String temp = "";
+		while((temp=br.readLine())!=null) {
+			sb.append(temp).append(lineSeparator);
+		}
+		
+		br.close();
+		return sb.toString();
 	}
 	
 	 /**
@@ -131,6 +184,21 @@ public class FileUtil {
 	}
 	
 	/**
+	 * 创建文件夹
+	 * @param path
+	 * @param fileName
+	 * @return
+	 */
+	public static File createDirectory(String path, String fileName) {
+		File file = new File(path + File.separator + fileName);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		return file;
+	}
+	
+	/**
 	 * Desp 使用fileStreams复制文件
 	 * targetFile 不一定需要存在，创建FileOutputStream(targetFile)会创建该文件
 	 * targetFile 可以存在，存在则覆盖原数据
@@ -211,6 +279,12 @@ public class FileUtil {
 	 * @throws IOException
 	 */
 	public static void copyDirectory(String sourcePath, String targetPath) throws IOException {
+		if(targetPath.contains(sourcePath)) {
+			//target文件夹不能在源文件下,递归调用会有bug
+			System.out.println("Failing...");
+			System.out.println("target文件夹不能在源文件下...");
+			return;
+		}
 		File targetDir = new File(targetPath);
 		if(!targetDir.exists()) {
 			targetDir.mkdirs();
@@ -258,6 +332,48 @@ public class FileUtil {
 					deleteDirectory(file);
 					file.delete();
 				}
+			}
+		}
+	}
+	
+	/**
+	 * 重命名文件
+	 * @param path
+	 * @param oldName
+	 * @param newName
+	 */
+	public static void renameFile(String path, String oldName, String newName) {
+		if(!oldName.equals(newName)) {
+			File oldFile = new File(path + File.separator + oldName);
+			File newFile = new File(path + File.separator + newName);
+			if(newFile.exists()) {
+				System.out.println("已存在同名的文件...重命名失败");
+				return;
+			}
+			
+			oldFile.renameTo(newFile);
+		}
+	}
+	
+	/**
+	 * 转移文件目录
+	 * @param fileName
+	 * @param oldPath
+	 * @param newPath
+	 * @param cover
+	 */
+	public static void changeDirectory(String fileName, String oldPath, String newPath, boolean cover) {
+		if(!oldPath.equals(newPath)) {
+			File oldFile = new File(oldPath + File.separator + fileName);
+			File newFile = new File(newPath + File.separator + fileName);
+			if(newFile.exists()) {
+				if(cover) {
+					oldFile.renameTo(newFile);
+				}else {
+					System.out.println("文件已存在，不能覆盖...");
+				}
+			} else {
+				oldFile.renameTo(newFile);
 			}
 		}
 	}

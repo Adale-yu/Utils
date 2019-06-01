@@ -42,6 +42,3 @@ private int sex;
  * ËùÊôÊÆÁ¦
  */
 private int belongOrgan;
-
-
-

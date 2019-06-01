@@ -16,7 +16,11 @@ public class FileTest {
 //			FileUtil.copyFileUsingFileStreams(file, new File(basePath+File.separator+"copy_"+file.getName()));
 //			FileUtil.copyFileUsingFileChannel(file, new File(basePath+File.separator+"copy_"+file.getName()));
 //			FileUtil.copyDirectory(basePath+File.separator+"java", basePath+File.separator+"copy");
-			FileUtil.deleteDirectory(new File("C:\\Users\\Administrator\\eclipse-test\\Test\\data"));
+//			FileUtil.deleteDirectory(new File("C:\\Users\\Administrator\\eclipse-test\\Test\\data"));
+			
+			File file = new File(basePath + File.separator + "java" + File.separator + File.separator + "Actor.java");
+			String content = FileUtil.readFromFileUsingInputStream(file);
+			System.out.println(content);
 			System.out.println("success");
 		} catch (Exception e) {
 			e.printStackTrace();
