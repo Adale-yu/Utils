@@ -43,44 +43,5 @@ private int sex;
  */
 private int belongOrgan;
 
-/**
- * 头像
- */
-private String headerIcon;
-
-/**
- * 半身像
- */
-private String actorPic;
-
-/**
- * 普攻
- */
-private int attackSkill;
-
-/**
- * 大招
- */
-private int specialSkill;
-
-/**
- * 大招暂停时间
- */
-private int specialSkillLockFrames;
-
-/**
- * 技能列表
- */
-private String normalSkill;
-
-/**
- * 技能序列
- */
-private String skillOrder;
-
-/**
- * 循环序列
- */
-private String skillOrderCycle;
 
 
