@@ -19,7 +19,7 @@ public class FileTest {
 //			FileUtil.deleteDirectory(new File("C:\\Users\\Administrator\\eclipse-test\\Test\\data"));
 			
 			File file = new File(basePath + File.separator + "java" + File.separator + File.separator + "Actor.java");
-			String content = FileUtil.readFromFileUsingInputStream(file);
+			String content = FileUtil.readFromFileUsingBufferedReader(file);
 			System.out.println(content);
 			System.out.println("success");
 		} catch (Exception e) {
